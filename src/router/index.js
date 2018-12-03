@@ -28,6 +28,22 @@ export default new Router({
       }
     },
     {
+        path: '/me/login',
+        name: 'login',
+        component: resolve => require(['views/me/login/index'], resolve),
+        meta: {
+            index: 1
+        }
+    },
+    {
+        path: '/me/register',
+        name: 'register',
+        component: resolve => require(['views/me/register/index'], resolve),
+        meta: {
+            index: 1
+        }
+    },
+    {
       path: '/tracking',
       name: 'tracking',
       component: resolve => require(['views/tracking/index'], resolve),
