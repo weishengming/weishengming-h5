@@ -1,0 +1,1 @@
+import Vue from 'vue'import Vuex from 'vuex'import location from './modules/location'import home from './modules/home'import common from './modules/common'// import login from './modules/login'Vue.use(Vuex)export default new Vuex.Store({  modules: {    location,    home,    common,  }})

@@ -1,0 +1,1 @@
+export default {  state(){    return {      weishengmingId:false    }  },  getters:{},  mutations:{    SET_WEISHENGMING_ID(state,id){      state.weishengmingId = id    },  },  actions:{  }}
