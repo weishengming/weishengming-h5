@@ -9,7 +9,7 @@
 
         <x-cell-group>
             <x-field
-                    v-model="username1"
+                    v-model="userName"
                     required
                     clearable
                     :label="$t('me.userName')"
@@ -19,7 +19,7 @@
             />
 
             <x-field
-                    v-model="password1"
+                    v-model="password"
                     type="password"
                     :label="$t('me.password')"
                     :placeholder="$t('me.inputPassword')"
@@ -34,30 +34,28 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-    axios.defaults.baseURL = 'http://localhost:9801';
     export default {
         name: "index",
         data(){
             return {
-                username1:'',
-                password1:''
+                userName:'',
+                password:''
             }
         },
         methods:{
 
             register(){
-                let params = new URLSearchParams();
-                params.append('username', "'"+this.username1+"'");       //你要传给后台的参数值 key/value
-                params.append('password', "'"+this.password1+"'");
-                axios({
+                console.log(this.userName+">>><<<"+this.password);
+                let params = {
                     url:this.$api.register,
                     method:'post',
-                    data:params
-                }).then(
-
-                )
+                    data:{
+                        userName:this.userName,
+                        password:this.password
+                    }
+                }
+                let registerPromise = this.$req(params)
+                registerPromise.then()
             }
         }
     }
