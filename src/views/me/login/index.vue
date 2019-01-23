@@ -1,38 +1,36 @@
 <template>
     <div id="login">
         <x-nav-bar
-                title="标题"
-                left-text="返回"
-                right-text="按钮"
+                :title="$t('logins.loginTitle')"
+                :left-text="$t('common.returnBack')"
                 left-arrow
-                @click-left="onClickLeft"
-                @click-right="onClickRight"
+                @click-left="$router.back(-1)"
         />
 
         <x-cell-group>
             <x-field
-                    v-model="username"
+                    v-model="userName"
                     required
                     clearable
-                    label="用户名"
+                    :label="$t('me.userName')"
                     icon="question"
-                    placeholder="请输入用户名"
-                    @click-icon="$toast('question')"
+                    :placeholder="$t('me.inputUserName')"
+                    @click-icon="$toast($t('me.inputPhoneOrEmail'))"
             />
 
             <x-field
                     v-model="password"
                     type="password"
-                    label="密码"
-                    placeholder="请输入密码"
+                    :label="$t('me.password')"
+                    :placeholder="$t('me.inputPassword')"
                     required
             />
         </x-cell-group>
 
-        <!--<x-button type="default" @click="login">登录</x-button>-->
+        <x-button type="default" @click="login" >{{$t('me.LogIn')}}</x-button>
 
     </div>
-    
+
 </template>
 
 <script>
@@ -40,41 +38,34 @@
         name: "index",
         data(){
             return {
-                username:'',
+                userName:'',
                 password:''
             }
         },
         methods:{
-            // login(){
-            //     let params = {
-            //         // contentType:"application/x-www-form-urlencoded",
-            //         url:this.$api.login,
-            //         method:"get",
-            //         data:{
-            //             version: '1.9.0',
-            //             language:'en',
-            //             mailOrphone: this.$des.encrypt(this.$desKey(), this.username, this.$desVi()),
-            //             password: this.$des.encrypt(this.$desKey(), this.password, this.$desVi()),
-            //             type:'40'
-            //
-            //         }
-            //     }
-            //     let loginPromise = this.$req(params)
-            //     loginPromise.then(res=>{
-            //         let {data,errorCode,message} = res
-            //         if(errorCode==0){
-            //             console.log(data)
-            //         }else{
-            //             this.$toast(message)
-            //         }
-            //     },err=>{
-            //         console.log(err)
-            //     })
-            //
-            //     console.log(this.$desKey()+"--->"+this.$desVi());
-            //     console.log(this.$des.encrypt(this.$desKey(), this.password, this.$desVi()));
-            //
-            // }
+            login(){
+                let params = {
+                    url:this.$api.login,
+                    method:'get',
+                    data:{
+                        userName:this.userName,
+                        password:this.password
+                    }
+                }
+                let loginPromise = this.$req(params)
+                loginPromise.then(res=>{
+                    let {msg,code,data} = res
+                    if(code=='200'){
+                        // this.SET_CASE(data)
+                        this.$router.push('/me')
+                    }else{
+                        console.log(msg)
+                        this.$toast(msg)
+                    }
+                },err=>{
+                    console.log(err)
+                })
+            }
         }
     }
 </script>

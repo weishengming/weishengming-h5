@@ -1,5 +1,5 @@
 <template>
-    <div id="login">
+    <div id="register">
         <x-nav-bar
                 :title="$t('regester.regesterTitle')"
                 :left-text="$t('common.returnBack')"
@@ -43,9 +43,7 @@
             }
         },
         methods:{
-
             register(){
-                console.log(this.userName+">>><<<"+this.password);
                 let params = {
                     url:this.$api.register,
                     method:'post',
@@ -55,7 +53,18 @@
                     }
                 }
                 let registerPromise = this.$req(params)
-                registerPromise.then()
+                registerPromise.then(res=>{
+                    let {msg,code,data} = res
+                    if(code=='200'){
+                        // this.SET_CASE(data)
+                        this.$router.push('/me/login')
+                    }else{
+                        console.log(msg)
+                        this.$toast(msg)
+                    }
+                },err=>{
+                    console.log(err)
+                })
             }
         }
     }
